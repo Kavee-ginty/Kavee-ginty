@@ -1,10 +1,10 @@
 import unittest
 import xml.etree.ElementTree as ET
 
-from scripts.generate_bending import render_svg
+from scripts.generate_snap import render_svg
 
 
-class BendingSvgTests(unittest.TestCase):
+class SnapSvgTests(unittest.TestCase):
     def test_calendar_positions_and_accessibility(self):
         weeks = [
             {"contributionDays": [
@@ -15,16 +15,18 @@ class BendingSvgTests(unittest.TestCase):
                 {"date": "2026-11-30", "weekday": 1, "contributionCount": 8, "contributionLevel": "FOURTH_QUARTILE"},
             ]},
         ]
-        svg = render_svg(weeks, "dark")
+        svg = render_svg(weeks, "dark", "AAAA")
         root = ET.fromstring(svg)
         ns = "{http://www.w3.org/2000/svg}"
         cells = [element for element in root.iter(f"{ns}rect") if element.find(f"{ns}title") is not None]
         self.assertEqual([(cell.get("x"), cell.get("y")) for cell in cells],
                          [("300", "76"), ("300", "106"), ("315", "91")])
-        self.assertEqual(sum(cell.get("class") == "active" for cell in cells), 2)
+        self.assertEqual(len(cells), 3)
+        self.assertEqual(sum(element.get("class", "").startswith("crumb") for element in root.iter()), 7)
         self.assertIn("3 contributions", svg)
+        self.assertIn("then 2 filled squares", svg)
         self.assertIn("prefers-reduced-motion", svg)
-        self.assertNotEqual(render_svg(weeks, "light"), svg)
+        self.assertNotEqual(render_svg(weeks, "light", "AAAA"), svg)
 
 
 if __name__ == "__main__":

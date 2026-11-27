@@ -50,6 +50,6 @@
 ### Contribution trail
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/output/github-bending-dark.svg" />
-  <img src="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/output/github-bending.svg" alt="Aang bending Kaveesha's contribution squares into place" width="100%" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/output/github-snap-dark.svg" />
+  <img src="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/output/github-snap.svg" alt="A golden gauntlet snaps and turns Kaveesha's contribution squares into dust" width="100%" />
 </picture>
