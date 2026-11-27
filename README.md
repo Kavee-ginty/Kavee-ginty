@@ -25,7 +25,7 @@
   <img src="assets/langchain.svg" width="48" height="48" alt="LangChain" />
 </p>
 
-### Selected projects
+### Projects
 
 | Project | What it does |
 | --- | --- |
