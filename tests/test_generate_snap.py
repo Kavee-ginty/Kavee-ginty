@@ -5,6 +5,26 @@ from scripts.generate_snap import render_svg
 
 
 class SnapSvgTests(unittest.TestCase):
+    def test_calendar_labels_and_legend(self):
+        weeks = [
+            {"contributionDays": [
+                {"date": "2026-11-29", "weekday": 0, "contributionCount": 0, "contributionLevel": "NONE"},
+            ]},
+            {"contributionDays": [
+                {"date": "2026-12-01", "weekday": 2, "contributionCount": 1, "contributionLevel": "FOURTH_QUARTILE"},
+            ]},
+        ]
+        root = ET.fromstring(render_svg(weeks, "dark", "AAAA", "BBBB"))
+        ns = "{http://www.w3.org/2000/svg}"
+        self.assertEqual([(text.text, text.get("x")) for text in root.iter(f"{ns}text")
+                          if text.get("class") == "month-label"], [("Dec", "47")])
+        self.assertEqual([text.text for text in root.iter(f"{ns}text")
+                          if text.text in {"Mon", "Wed", "Fri", "Less", "More"}],
+                         ["Mon", "Wed", "Fri", "Less", "More"])
+        self.assertEqual([rect.get("fill") for rect in root.iter(f"{ns}rect")
+                          if rect.get("class") == "legend-swatch"],
+                         ["#151b23", "#033a16", "#196c2e", "#2ea043", "#56d364"])
+
     def test_calendar_positions_and_accessibility(self):
         weeks = [
             {"contributionDays": [

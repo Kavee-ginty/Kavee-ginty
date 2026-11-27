@@ -27,6 +27,7 @@ LEVELS = {
     "THIRD_QUARTILE": 3,
     "FOURTH_QUARTILE": 4,
 }
+MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
 
 def fetch_weeks(username: str, token: str) -> list[dict]:
@@ -89,16 +90,27 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str, red_glove_png_
     dark = theme == "dark"
     background = "#0d1117" if dark else "#ffffff"
     border = "#30363d" if dark else "#d0d7de"
-    empty = "#1b232c" if dark else "#ebedf0"
+    empty = "#151b23" if dark else "#ebedf0"
     colors = (
-        (empty, "#0e665d", "#088b7b", "#0fb69a", "#39ddb1")
-        if dark else (empty, "#b9e9dd", "#77d9bd", "#34bb98", "#128a72")
+        (empty, "#033a16", "#196c2e", "#2ea043", "#56d364")
+        if dark else (empty, "#9be9a8", "#40c463", "#30a14e", "#216e39")
     )
-    cells, crumbs = [], []
+    label_color = "#e6edf3" if dark else "#24292f"
+    muted_color = "#8b949e" if dark else "#57606a"
+    cells, crumbs, month_labels = [], [], []
+    last_month = None
     active_count = 0
     for week_index, week in enumerate(weeks):
+        days = week["contributionDays"]
+        if days:
+            month = days[-1]["date"][5:7]
+            if month != last_month:
+                if month_labels and week_index - month_labels[-1][0] < 2:
+                    month_labels.pop()
+                month_labels.append((week_index, MONTHS[int(month) - 1]))
+                last_month = month
         bucket = min(11, week_index * 12 // len(weeks))
-        for day in week["contributionDays"]:
+        for day in days:
             weekday = day["weekday"]
             level = LEVELS[day["contributionLevel"]]
             count = day["contributionCount"]
@@ -234,7 +246,10 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str, red_glove_png_
     }}
   </style>
   <rect x=".5" y=".5" width="959" height="189" rx="16" fill="{background}" stroke="{border}"/>
+  <g fill="{label_color}" font-family="Arial, sans-serif" font-size="11">{''.join(f'<text class="month-label" x="{30 + week_index * 17}" y="27">{month}</text>' for week_index, month in month_labels)}<text x="4" y="65">Mon</text><text x="4" y="99">Wed</text><text x="7" y="133">Fri</text></g>
   <g shape-rendering="geometricPrecision">{''.join(cells)}{''.join(crumbs)}</g>
+  <g fill="{muted_color}" font-family="Arial, sans-serif" font-size="11"><text x="785" y="178">Less</text><text x="899" y="178">More</text></g>
+  <g>{''.join(f'<rect class="legend-swatch" x="{814 + level * 17}" y="167" width="13" height="13" rx="2" fill="{color}"/>' for level, color in enumerate(colors))}</g>
   <circle class="glow" cx="480" cy="95" r="52" fill="url(#aura)"/>
   <g class="gauntlet"><svg x="435" y="40" width="90" height="108" viewBox="456 52 48 53" preserveAspectRatio="none" overflow="hidden"><g mask="url(#gold-fade-mask)"><use href="#glove-art" mask="url(#base-mask)"/><use class="index-finger" href="#glove-art" clip-path="url(#index-clip)"/><use class="thumb" href="#glove-art" clip-path="url(#thumb-clip)"/></g></svg></g>
   <g class="flash"><circle cx="500" cy="75" r="13" fill="url(#burst)"/><path d="M500 50v8 M500 92v8 M475 75h8 M517 75h8 M482 57l7 7 M511 86l7 7 M518 57l-7 7 M489 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
@@ -257,7 +272,7 @@ def main() -> None:
     weeks = fetch_weeks(username, token)
     output = Path("dist")
     output.mkdir(exist_ok=True)
-    for theme, filename in (("light", "github-snap-hands.svg"), ("dark", "github-snap-hands-dark.svg")):
+    for theme, filename in (("light", "github-snap-calendar.svg"), ("dark", "github-snap-calendar-dark.svg")):
         (output / filename).write_text(render_svg(weeks, theme, glove_png_b64, red_glove_png_b64), encoding="utf-8")
     print(f"Generated snap animation from {len(weeks)} contribution weeks")
 
