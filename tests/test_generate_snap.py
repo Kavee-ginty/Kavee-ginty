@@ -26,6 +26,8 @@ class SnapSvgTests(unittest.TestCase):
         children = list(root)
         self.assertLess(next(i for i, element in enumerate(children) if element.get("shape-rendering")),
                         next(i for i, element in enumerate(children) if element.get("class") == "gauntlet"))
+        self.assertEqual({element.get("class") for element in root.iter(f"{ns}use")},
+                         {None, "index-finger", "thumb"})
         self.assertIn("3 contributions", svg)
         self.assertIn("then 2 filled squares", svg)
         self.assertIn("prefers-reduced-motion", svg)

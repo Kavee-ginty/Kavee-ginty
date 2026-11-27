@@ -131,12 +131,18 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
   <defs>
     <radialGradient id="aura"><stop stop-color="#fde047" stop-opacity=".85"/><stop offset=".45" stop-color="#a855f7" stop-opacity=".55"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>
     <radialGradient id="burst"><stop stop-color="#fff"/><stop offset=".2" stop-color="#fde047"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></radialGradient>
+    <image id="glove-art" x="448" y="52" width="64" height="85" href="data:image/png;base64,{glove_png_b64}"/>
+    <clipPath id="index-clip" clipPathUnits="userSpaceOnUse"><path d="M480 66 Q487 63 494 67 L502 71 L501 78 L493 81 L481 77Z"/></clipPath>
+    <clipPath id="thumb-clip" clipPathUnits="userSpaceOnUse"><path d="M499 69 Q511 69 513 80 L512 94 L502 106 L492 103 L495 91 L493 78Z"/></clipPath>
+    <mask id="base-mask" maskUnits="userSpaceOnUse" x="448" y="52" width="64" height="85"><rect x="448" y="52" width="64" height="85" fill="white"/><path d="M480 66 Q487 63 494 67 L502 71 L501 78 L493 81 L481 77Z" fill="black"/><path d="M499 69 Q511 69 513 80 L512 94 L502 106 L492 103 L495 91 L493 78Z" fill="black"/></mask>
   </defs>
   <style>
     .cell {{ transform-box: fill-box; transform-origin: center; }}
     .crumb {{ opacity: 0; }}
     .glow {{ transform-origin: 480px 95px; animation: glow 12s ease-in-out infinite; }}
     .gauntlet {{ transform-origin: 500px 75px; animation: snap 12s ease-in-out infinite; }}
+    .index-finger {{ transform-origin: 483px 77px; animation: index-snap 12s ease-in-out infinite; }}
+    .thumb {{ transform-origin: 499px 100px; animation: thumb-snap 12s ease-in-out infinite; }}
     .flash {{ transform-origin: 500px 75px; animation: flash 12s ease-out infinite; }}
     {animation_styles()}
     @keyframes glow {{
@@ -150,10 +156,22 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
     @keyframes snap {{
       0%, 12% {{ transform: translateY(170px); opacity: 0; }}
       29%, 38% {{ transform: translateY(0); opacity: 1; }}
-      39.5% {{ transform: rotate(-7deg); }}
-      41% {{ transform: rotate(7deg) scale(1.04); }}
+      39.5% {{ transform: rotate(-2deg); }}
+      41% {{ transform: rotate(2deg) scale(1.02); }}
       43%, 84% {{ transform: rotate(0deg); opacity: 1; }}
       94%, 100% {{ transform: translateY(170px); opacity: 0; }}
+    }}
+    @keyframes index-snap {{
+      0%, 38% {{ transform: none; }}
+      40.5% {{ transform: translate(2px, 3px) rotate(9deg); }}
+      41.5% {{ transform: translate(-1px, 1px) rotate(-5deg); }}
+      44%, 100% {{ transform: none; }}
+    }}
+    @keyframes thumb-snap {{
+      0%, 38% {{ transform: none; }}
+      40.5% {{ transform: translate(-2px, -2px) rotate(-9deg); }}
+      41.5% {{ transform: translate(2px, 2px) rotate(8deg); }}
+      44%, 100% {{ transform: none; }}
     }}
     @keyframes flash {{
       0%, 39.5% {{ opacity: 0; transform: scale(.1); }}
@@ -161,7 +179,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
       45%, 100% {{ opacity: 0; transform: scale(2.5); }}
     }}
     @media (prefers-reduced-motion: reduce) {{
-      .cell, .crumb, .glow, .gauntlet, .flash {{ animation: none; }}
+      .cell, .crumb, .glow, .gauntlet, .index-finger, .thumb, .flash {{ animation: none; }}
       .cell {{ opacity: 1; transform: none; }}
       .crumb, .glow, .flash {{ opacity: 0; }}
     }}
@@ -169,7 +187,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
   <rect x=".5" y=".5" width="959" height="189" rx="16" fill="{background}" stroke="{border}"/>
   <g shape-rendering="geometricPrecision">{''.join(cells)}{''.join(crumbs)}</g>
   <circle class="glow" cx="480" cy="95" r="52" fill="url(#aura)"/>
-  <g class="gauntlet"><image x="448" y="52" width="64" height="85" href="data:image/png;base64,{glove_png_b64}"/></g>
+  <g class="gauntlet"><use href="#glove-art" mask="url(#base-mask)"/><use class="index-finger" href="#glove-art" clip-path="url(#index-clip)"/><use class="thumb" href="#glove-art" clip-path="url(#thumb-clip)"/></g>
   <g class="flash"><circle cx="500" cy="75" r="13" fill="url(#burst)"/><path d="M500 50v8 M500 92v8 M475 75h8 M517 75h8 M482 57l7 7 M511 86l7 7 M518 57l-7 7 M489 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
 </svg>
 '''
@@ -185,7 +203,7 @@ def main() -> None:
     weeks = fetch_weeks(username, token)
     output = Path("dist")
     output.mkdir(exist_ok=True)
-    for theme, filename in (("light", "github-snap-flow.svg"), ("dark", "github-snap-flow-dark.svg")):
+    for theme, filename in (("light", "github-snap-fingers.svg"), ("dark", "github-snap-fingers-dark.svg")):
         (output / filename).write_text(render_svg(weeks, theme, glove_png_b64), encoding="utf-8")
     print(f"Generated snap animation from {len(weeks)} contribution weeks")
 
