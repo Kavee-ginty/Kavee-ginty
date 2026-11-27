@@ -134,9 +134,9 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
   <style>
     .cell {{ transform-box: fill-box; transform-origin: center; }}
     .crumb {{ opacity: 0; }}
-    .glow {{ transform-origin: 158px 112px; animation: glow 12s ease-in-out infinite; }}
-    .gauntlet {{ transform-origin: 207px 98px; animation: snap 12s ease-in-out infinite; }}
-    .flash {{ transform-origin: 207px 98px; animation: flash 12s ease-out infinite; }}
+    .glow {{ transform-origin: 245px 124px; animation: glow 12s ease-in-out infinite; }}
+    .gauntlet {{ transform-origin: 255px 105px; animation: snap 12s ease-in-out infinite; }}
+    .flash {{ transform-origin: 255px 105px; animation: flash 12s ease-out infinite; }}
     {animation_styles()}
     @keyframes glow {{
       0%, 16% {{ opacity: 0; transform: scale(.65); }}
@@ -162,9 +162,9 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
     }}
   </style>
   <rect x=".5" y=".5" width="1159" height="259" rx="18" fill="{background}" stroke="{border}"/>
-  <circle class="glow" cx="158" cy="112" r="113" fill="url(#aura)"/>
-  <g class="gauntlet"><image x="62" y="4" width="190" height="252" href="data:image/png;base64,{glove_png_b64}"/></g>
-  <g class="flash"><circle cx="207" cy="98" r="25" fill="url(#burst)"/><path d="M207 52v18 M207 126v18 M161 98h18 M235 98h18 M174 65l13 13 M227 118l13 13 M240 65l-13 13 M187 118l-13 13" stroke="#fde68a" stroke-width="3" stroke-linecap="round"/></g>
+  <circle class="glow" cx="245" cy="124" r="45" fill="url(#aura)"/>
+  <g class="gauntlet"><image x="218" y="87" width="56" height="75" href="data:image/png;base64,{glove_png_b64}"/></g>
+  <g class="flash"><circle cx="255" cy="105" r="11" fill="url(#burst)"/><path d="M255 83v7 M255 120v7 M233 105h7 M270 105h7 M240 90l6 6 M264 114l6 6 M270 90l-6 6 M246 114l-6 6" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
   <g shape-rendering="geometricPrecision">{''.join(cells)}{''.join(crumbs)}</g>
 </svg>
 '''
