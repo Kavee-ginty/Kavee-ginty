@@ -20,7 +20,7 @@ class SnapSvgTests(unittest.TestCase):
         ns = "{http://www.w3.org/2000/svg}"
         cells = [element for element in root.iter(f"{ns}rect") if element.find(f"{ns}title") is not None]
         self.assertEqual([(cell.get("x"), cell.get("y")) for cell in cells],
-                         [("300", "76"), ("300", "106"), ("315", "91")])
+                         [("210", "37"), ("210", "71"), ("227", "54")])
         self.assertEqual(len(cells), 3)
         self.assertEqual(sum(element.get("class", "").startswith("crumb") for element in root.iter()), 7)
         self.assertIn("3 contributions", svg)

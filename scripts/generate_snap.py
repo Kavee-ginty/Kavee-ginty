@@ -101,7 +101,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
             if not 0 <= weekday <= 6 or not isinstance(count, int) or count < 0:
                 raise ValueError("invalid contribution day")
             active_count += level > 0
-            x, y = 300 + week_index * 15, 76 + weekday * 15
+            x, y = 210 + week_index * 17, 37 + weekday * 17
             drift_x = 28 + (week_index * 13 + weekday * 7) % 60
             drift_y = -18 - (week_index * 5 + weekday * 11) % 45
             rotation = 20 + (week_index * 9 + weekday * 17) % 70
@@ -112,7 +112,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
             date = html.escape(day["date"])
             title = f"{date}: {count} contribution{'s' if count != 1 else ''}"
             cells.append(
-                f'<rect class="cell b{bucket}" x="{x}" y="{y}" width="11" height="11" '
+                f'<rect class="cell b{bucket}" x="{x}" y="{y}" width="15" height="15" '
                 f'rx="2" fill="{colors[level]}" style="{style}"><title>{title}</title></rect>'
             )
             for fragment in range(3 if level else 1):
@@ -124,7 +124,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
                     f'style="--dx:{drift_x + fragment * 13}px;--dy:{drift_y - fragment * 9}px"/>'
                 )
 
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="260" viewBox="0 0 1160 260" role="img" aria-labelledby="title description">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="190" viewBox="0 0 1160 190" role="img" aria-labelledby="title description">
   <title id="title">Golden gauntlet snapping Kaveesha's GitHub contributions into dust</title>
   <desc id="description">The full contribution calendar glows, then {active_count} filled squares and the rest of the grid drift away as dust after a snap.</desc>
   <defs>
@@ -134,9 +134,9 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
   <style>
     .cell {{ transform-box: fill-box; transform-origin: center; }}
     .crumb {{ opacity: 0; }}
-    .glow {{ transform-origin: 245px 124px; animation: glow 12s ease-in-out infinite; }}
-    .gauntlet {{ transform-origin: 255px 105px; animation: snap 12s ease-in-out infinite; }}
-    .flash {{ transform-origin: 255px 105px; animation: flash 12s ease-out infinite; }}
+    .glow {{ transform-origin: 143px 95px; animation: glow 12s ease-in-out infinite; }}
+    .gauntlet {{ transform-origin: 162px 75px; animation: snap 12s ease-in-out infinite; }}
+    .flash {{ transform-origin: 162px 75px; animation: flash 12s ease-out infinite; }}
     {animation_styles()}
     @keyframes glow {{
       0%, 16% {{ opacity: 0; transform: scale(.65); }}
@@ -161,10 +161,10 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
       .crumb, .glow, .flash {{ opacity: 0; }}
     }}
   </style>
-  <rect x=".5" y=".5" width="1159" height="259" rx="18" fill="{background}" stroke="{border}"/>
-  <circle class="glow" cx="245" cy="124" r="45" fill="url(#aura)"/>
-  <g class="gauntlet"><image x="218" y="87" width="56" height="75" href="data:image/png;base64,{glove_png_b64}"/></g>
-  <g class="flash"><circle cx="255" cy="105" r="11" fill="url(#burst)"/><path d="M255 83v7 M255 120v7 M233 105h7 M270 105h7 M240 90l6 6 M264 114l6 6 M270 90l-6 6 M246 114l-6 6" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
+  <rect x=".5" y=".5" width="1159" height="189" rx="16" fill="{background}" stroke="{border}"/>
+  <circle class="glow" cx="143" cy="95" r="52" fill="url(#aura)"/>
+  <g class="gauntlet"><image x="110" y="52" width="64" height="85" href="data:image/png;base64,{glove_png_b64}"/></g>
+  <g class="flash"><circle cx="162" cy="75" r="13" fill="url(#burst)"/><path d="M162 50v8 M162 92v8 M137 75h8 M179 75h8 M144 57l7 7 M173 86l7 7 M180 57l-7 7 M151 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
   <g shape-rendering="geometricPrecision">{''.join(cells)}{''.join(crumbs)}</g>
 </svg>
 '''
