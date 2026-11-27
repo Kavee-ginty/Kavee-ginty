@@ -180,7 +180,7 @@ def main() -> None:
     weeks = fetch_weeks(username, token)
     output = Path("dist")
     output.mkdir(exist_ok=True)
-    for theme, filename in (("light", "github-snap.svg"), ("dark", "github-snap-dark.svg")):
+    for theme, filename in (("light", "github-snap-fit.svg"), ("dark", "github-snap-fit-dark.svg")):
         (output / filename).write_text(render_svg(weeks, theme, glove_png_b64), encoding="utf-8")
     print(f"Generated snap animation from {len(weeks)} contribution weeks")
 
