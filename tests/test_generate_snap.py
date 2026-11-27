@@ -24,6 +24,8 @@ class SnapSvgTests(unittest.TestCase):
         self.assertEqual([rect.get("fill") for rect in root.iter(f"{ns}rect")
                           if rect.get("class") == "legend-swatch"],
                          ["#151b23", "#033a16", "#196c2e", "#2ea043", "#56d364"])
+        self.assertEqual(sum(group.get("class") == "annotations" for group in root.iter(f"{ns}g")), 3)
+        self.assertIn("@keyframes annotations", render_svg(weeks, "dark", "AAAA", "BBBB"))
 
     def test_calendar_positions_and_accessibility(self):
         weeks = [

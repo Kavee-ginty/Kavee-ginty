@@ -164,6 +164,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str, red_glove_png_
   <style>
     .cell {{ transform-box: fill-box; transform-origin: center; }}
     .crumb {{ opacity: 0; }}
+    .annotations {{ animation: annotations 20s ease-in-out infinite; }}
     .glow {{ transform-origin: 480px 95px; animation: gold-glow 20s ease-in-out infinite; }}
     .gauntlet {{ transform-origin: 500px 75px; animation: gold-snap 20s ease-in-out infinite; }}
     .index-finger {{ transform-origin: 483px 77px; animation: index-snap 20s ease-in-out infinite; }}
@@ -239,17 +240,22 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str, red_glove_png_
       70.5% {{ opacity: 1; transform: scale(1.5); }}
       74%, 100% {{ opacity: 0; transform: scale(2.5); }}
     }}
+    @keyframes annotations {{
+      0%, 29% {{ opacity: 1; }}
+      53%, 70% {{ opacity: 0; }}
+      81%, 100% {{ opacity: 1; }}
+    }}
     @media (prefers-reduced-motion: reduce) {{
-      .cell, .crumb, .glow, .gauntlet, .index-finger, .thumb, .flash, .red-glow, .red-gauntlet, .red-index, .red-thumb, .red-flash {{ animation: none; }}
+      .cell, .crumb, .annotations, .glow, .gauntlet, .index-finger, .thumb, .flash, .red-glow, .red-gauntlet, .red-index, .red-thumb, .red-flash {{ animation: none; }}
       .cell {{ opacity: 1; transform: none; }}
       .crumb, .glow, .gauntlet, .flash, .red-glow, .red-gauntlet, .red-flash {{ opacity: 0; }}
     }}
   </style>
   <rect x=".5" y=".5" width="959" height="189" rx="16" fill="{background}" stroke="{border}"/>
-  <g fill="{label_color}" font-family="Arial, sans-serif" font-size="11">{''.join(f'<text class="month-label" x="{30 + week_index * 17}" y="27">{month}</text>' for week_index, month in month_labels)}<text x="4" y="65">Mon</text><text x="4" y="99">Wed</text><text x="7" y="133">Fri</text></g>
+  <g class="annotations" fill="{label_color}" font-family="Arial, sans-serif" font-size="11">{''.join(f'<text class="month-label" x="{30 + week_index * 17}" y="27">{month}</text>' for week_index, month in month_labels)}<text x="4" y="65">Mon</text><text x="4" y="99">Wed</text><text x="7" y="133">Fri</text></g>
   <g shape-rendering="geometricPrecision">{''.join(cells)}{''.join(crumbs)}</g>
-  <g fill="{muted_color}" font-family="Arial, sans-serif" font-size="11"><text x="785" y="178">Less</text><text x="899" y="178">More</text></g>
-  <g>{''.join(f'<rect class="legend-swatch" x="{814 + level * 17}" y="167" width="13" height="13" rx="2" fill="{color}"/>' for level, color in enumerate(colors))}</g>
+  <g class="annotations" fill="{muted_color}" font-family="Arial, sans-serif" font-size="11"><text x="785" y="178">Less</text><text x="899" y="178">More</text></g>
+  <g class="annotations">{''.join(f'<rect class="legend-swatch" x="{814 + level * 17}" y="167" width="13" height="13" rx="2" fill="{color}"/>' for level, color in enumerate(colors))}</g>
   <circle class="glow" cx="480" cy="95" r="52" fill="url(#aura)"/>
   <g class="gauntlet"><svg x="435" y="40" width="90" height="108" viewBox="456 52 48 53" preserveAspectRatio="none" overflow="hidden"><g mask="url(#gold-fade-mask)"><use href="#glove-art" mask="url(#base-mask)"/><use class="index-finger" href="#glove-art" clip-path="url(#index-clip)"/><use class="thumb" href="#glove-art" clip-path="url(#thumb-clip)"/></g></svg></g>
   <g class="flash"><circle cx="500" cy="75" r="13" fill="url(#burst)"/><path d="M500 50v8 M500 92v8 M475 75h8 M517 75h8 M482 57l7 7 M511 86l7 7 M518 57l-7 7 M489 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
@@ -272,7 +278,7 @@ def main() -> None:
     weeks = fetch_weeks(username, token)
     output = Path("dist")
     output.mkdir(exist_ok=True)
-    for theme, filename in (("light", "github-snap-calendar.svg"), ("dark", "github-snap-calendar-dark.svg")):
+    for theme, filename in (("light", "github-snap-calendar-synced.svg"), ("dark", "github-snap-calendar-synced-dark.svg")):
         (output / filename).write_text(render_svg(weeks, theme, glove_png_b64, red_glove_png_b64), encoding="utf-8")
     print(f"Generated snap animation from {len(weeks)} contribution weeks")
 
