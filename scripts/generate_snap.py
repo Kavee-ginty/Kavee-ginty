@@ -63,10 +63,11 @@ def animation_styles() -> str:
       .b{bucket} {{ animation: dust{bucket} 12s ease-out infinite; }}
       .c{bucket} {{ animation: crumb{bucket} 12s ease-out infinite; }}
       @keyframes dust{bucket} {{
-        0%, {start}% {{ opacity: 1; transform: none; }}
+        0% {{ opacity: 0; transform: none; }}
+        8%, {start}% {{ opacity: 1; transform: none; }}
         {middle}% {{ opacity: .58; transform: translate(var(--mx), var(--my)) rotate(var(--rot)) scale(.72); }}
         {end}%, 95% {{ opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(.08); }}
-        99%, 100% {{ opacity: 1; transform: none; }}
+        99%, 100% {{ opacity: 0; transform: none; }}
       }}
       @keyframes crumb{bucket} {{
         0%, {start}% {{ opacity: 0; transform: none; }}
@@ -101,7 +102,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
             if not 0 <= weekday <= 6 or not isinstance(count, int) or count < 0:
                 raise ValueError("invalid contribution day")
             active_count += level > 0
-            x, y = 210 + week_index * 17, 37 + weekday * 17
+            x, y = 30 + week_index * 17, 37 + weekday * 17
             drift_x = 28 + (week_index * 13 + weekday * 7) % 60
             drift_y = -18 - (week_index * 5 + weekday * 11) % 45
             rotation = 20 + (week_index * 9 + weekday * 17) % 70
@@ -124,7 +125,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
                     f'style="--dx:{drift_x + fragment * 13}px;--dy:{drift_y - fragment * 9}px"/>'
                 )
 
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="190" viewBox="0 0 1160 190" role="img" aria-labelledby="title description">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="960" height="190" viewBox="0 0 960 190" role="img" aria-labelledby="title description">
   <title id="title">Golden gauntlet snapping Kaveesha's GitHub contributions into dust</title>
   <desc id="description">The full contribution calendar glows, then {active_count} filled squares and the rest of the grid drift away as dust after a snap.</desc>
   <defs>
@@ -134,21 +135,25 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
   <style>
     .cell {{ transform-box: fill-box; transform-origin: center; }}
     .crumb {{ opacity: 0; }}
-    .glow {{ transform-origin: 660px 95px; animation: glow 12s ease-in-out infinite; }}
-    .gauntlet {{ transform-origin: 680px 75px; animation: snap 12s ease-in-out infinite; }}
-    .flash {{ transform-origin: 680px 75px; animation: flash 12s ease-out infinite; }}
+    .glow {{ transform-origin: 480px 95px; animation: glow 12s ease-in-out infinite; }}
+    .gauntlet {{ transform-origin: 500px 75px; animation: snap 12s ease-in-out infinite; }}
+    .flash {{ transform-origin: 500px 75px; animation: flash 12s ease-out infinite; }}
     {animation_styles()}
     @keyframes glow {{
-      0%, 16% {{ opacity: 0; transform: scale(.65); }}
-      30%, 38% {{ opacity: .85; transform: scale(1); }}
-      41% {{ opacity: 1; transform: scale(1.3); }}
-      49%, 100% {{ opacity: 0; transform: scale(1.5); }}
+      0%, 24% {{ opacity: 0; transform: translateY(170px) scale(.65); }}
+      28% {{ opacity: 0; transform: translateY(0) scale(.65); }}
+      34%, 38% {{ opacity: .85; transform: translateY(0) scale(1); }}
+      41% {{ opacity: 1; transform: translateY(0) scale(1.3); }}
+      50%, 82% {{ opacity: .45; transform: translateY(0) scale(1); }}
+      94%, 100% {{ opacity: 0; transform: translateY(170px) scale(.8); }}
     }}
     @keyframes snap {{
-      0%, 38% {{ transform: rotate(0deg); }}
+      0%, 12% {{ transform: translateY(170px); opacity: 0; }}
+      29%, 38% {{ transform: translateY(0); opacity: 1; }}
       39.5% {{ transform: rotate(-7deg); }}
       41% {{ transform: rotate(7deg) scale(1.04); }}
-      43%, 100% {{ transform: rotate(0deg); }}
+      43%, 84% {{ transform: rotate(0deg); opacity: 1; }}
+      94%, 100% {{ transform: translateY(170px); opacity: 0; }}
     }}
     @keyframes flash {{
       0%, 39.5% {{ opacity: 0; transform: scale(.1); }}
@@ -161,11 +166,11 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
       .crumb, .glow, .flash {{ opacity: 0; }}
     }}
   </style>
-  <rect x=".5" y=".5" width="1159" height="189" rx="16" fill="{background}" stroke="{border}"/>
+  <rect x=".5" y=".5" width="959" height="189" rx="16" fill="{background}" stroke="{border}"/>
   <g shape-rendering="geometricPrecision">{''.join(cells)}{''.join(crumbs)}</g>
-  <circle class="glow" cx="660" cy="95" r="52" fill="url(#aura)"/>
-  <g class="gauntlet"><image x="628" y="52" width="64" height="85" href="data:image/png;base64,{glove_png_b64}"/></g>
-  <g class="flash"><circle cx="680" cy="75" r="13" fill="url(#burst)"/><path d="M680 50v8 M680 92v8 M655 75h8 M697 75h8 M662 57l7 7 M691 86l7 7 M698 57l-7 7 M669 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
+  <circle class="glow" cx="480" cy="95" r="52" fill="url(#aura)"/>
+  <g class="gauntlet"><image x="448" y="52" width="64" height="85" href="data:image/png;base64,{glove_png_b64}"/></g>
+  <g class="flash"><circle cx="500" cy="75" r="13" fill="url(#burst)"/><path d="M500 50v8 M500 92v8 M475 75h8 M517 75h8 M482 57l7 7 M511 86l7 7 M518 57l-7 7 M489 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
 </svg>
 '''
 
@@ -180,7 +185,7 @@ def main() -> None:
     weeks = fetch_weeks(username, token)
     output = Path("dist")
     output.mkdir(exist_ok=True)
-    for theme, filename in (("light", "github-snap-center.svg"), ("dark", "github-snap-center-dark.svg")):
+    for theme, filename in (("light", "github-snap-flow.svg"), ("dark", "github-snap-flow-dark.svg")):
         (output / filename).write_text(render_svg(weeks, theme, glove_png_b64), encoding="utf-8")
     print(f"Generated snap animation from {len(weeks)} contribution weeks")
 
