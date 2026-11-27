@@ -187,7 +187,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
   <rect x=".5" y=".5" width="959" height="189" rx="16" fill="{background}" stroke="{border}"/>
   <g shape-rendering="geometricPrecision">{''.join(cells)}{''.join(crumbs)}</g>
   <circle class="glow" cx="480" cy="95" r="52" fill="url(#aura)"/>
-  <g class="gauntlet"><use href="#glove-art" mask="url(#base-mask)"/><use class="index-finger" href="#glove-art" clip-path="url(#index-clip)"/><use class="thumb" href="#glove-art" clip-path="url(#thumb-clip)"/></g>
+  <g class="gauntlet"><g transform="translate(480 94.5) scale(1.2) translate(-480 -94.5)"><use href="#glove-art" mask="url(#base-mask)"/><use class="index-finger" href="#glove-art" clip-path="url(#index-clip)"/><use class="thumb" href="#glove-art" clip-path="url(#thumb-clip)"/></g></g>
   <g class="flash"><circle cx="500" cy="75" r="13" fill="url(#burst)"/><path d="M500 50v8 M500 92v8 M475 75h8 M517 75h8 M482 57l7 7 M511 86l7 7 M518 57l-7 7 M489 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
 </svg>
 '''
