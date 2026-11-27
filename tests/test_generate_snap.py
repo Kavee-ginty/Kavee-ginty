@@ -23,6 +23,9 @@ class SnapSvgTests(unittest.TestCase):
                          [("210", "37"), ("210", "71"), ("227", "54")])
         self.assertEqual(len(cells), 3)
         self.assertEqual(sum(element.get("class", "").startswith("crumb") for element in root.iter()), 7)
+        children = list(root)
+        self.assertLess(next(i for i, element in enumerate(children) if element.get("shape-rendering")),
+                        next(i for i, element in enumerate(children) if element.get("class") == "gauntlet"))
         self.assertIn("3 contributions", svg)
         self.assertIn("then 2 filled squares", svg)
         self.assertIn("prefers-reduced-motion", svg)

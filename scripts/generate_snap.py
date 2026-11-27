@@ -134,9 +134,9 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
   <style>
     .cell {{ transform-box: fill-box; transform-origin: center; }}
     .crumb {{ opacity: 0; }}
-    .glow {{ transform-origin: 143px 95px; animation: glow 12s ease-in-out infinite; }}
-    .gauntlet {{ transform-origin: 162px 75px; animation: snap 12s ease-in-out infinite; }}
-    .flash {{ transform-origin: 162px 75px; animation: flash 12s ease-out infinite; }}
+    .glow {{ transform-origin: 660px 95px; animation: glow 12s ease-in-out infinite; }}
+    .gauntlet {{ transform-origin: 680px 75px; animation: snap 12s ease-in-out infinite; }}
+    .flash {{ transform-origin: 680px 75px; animation: flash 12s ease-out infinite; }}
     {animation_styles()}
     @keyframes glow {{
       0%, 16% {{ opacity: 0; transform: scale(.65); }}
@@ -162,10 +162,10 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str) -> str:
     }}
   </style>
   <rect x=".5" y=".5" width="1159" height="189" rx="16" fill="{background}" stroke="{border}"/>
-  <circle class="glow" cx="143" cy="95" r="52" fill="url(#aura)"/>
-  <g class="gauntlet"><image x="110" y="52" width="64" height="85" href="data:image/png;base64,{glove_png_b64}"/></g>
-  <g class="flash"><circle cx="162" cy="75" r="13" fill="url(#burst)"/><path d="M162 50v8 M162 92v8 M137 75h8 M179 75h8 M144 57l7 7 M173 86l7 7 M180 57l-7 7 M151 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
   <g shape-rendering="geometricPrecision">{''.join(cells)}{''.join(crumbs)}</g>
+  <circle class="glow" cx="660" cy="95" r="52" fill="url(#aura)"/>
+  <g class="gauntlet"><image x="628" y="52" width="64" height="85" href="data:image/png;base64,{glove_png_b64}"/></g>
+  <g class="flash"><circle cx="680" cy="75" r="13" fill="url(#burst)"/><path d="M680 50v8 M680 92v8 M655 75h8 M697 75h8 M662 57l7 7 M691 86l7 7 M698 57l-7 7 M669 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
 </svg>
 '''
 
@@ -180,7 +180,7 @@ def main() -> None:
     weeks = fetch_weeks(username, token)
     output = Path("dist")
     output.mkdir(exist_ok=True)
-    for theme, filename in (("light", "github-snap-fit.svg"), ("dark", "github-snap-fit-dark.svg")):
+    for theme, filename in (("light", "github-snap-center.svg"), ("dark", "github-snap-center-dark.svg")):
         (output / filename).write_text(render_svg(weeks, theme, glove_png_b64), encoding="utf-8")
     print(f"Generated snap animation from {len(weeks)} contribution weeks")
 
