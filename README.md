@@ -47,7 +47,7 @@
   <img height="165" src="https://streak-stats.demolab.com?user=Kavee-ginty&theme=tokyonight&hide_border=true" alt="Kaveesha's GitHub contribution streak" />
 </div>
 
-### Contribution trail
+## 1,092 contributions in the last year
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-hands-dark.svg" />
