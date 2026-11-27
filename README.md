@@ -2,7 +2,7 @@
   <img src="assets/banner.png" alt="Two micromouse robots in a maze" width="100%" />
 
   <h1>Kaveesha Ginodh</h1>
-  <p>BSc Artificial Intelligence undergraduate at the University of Moratuwa</p>
+  <p><a href="https://uom.lk/itfac/bachelor-science-honours-artificial-intelligence">BSc (Hons) in Artificial Intelligence at the University of Moratuwa</a></p>
   <p>I build at the intersection of AI, software, and hardware.</p>
 
   <a href="https://www.linkedin.com/in/kaveesha-ginodh/"><img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="Connect on LinkedIn" /></a>
@@ -14,7 +14,7 @@
 
 ### About me
 
-- Studying **BSc Artificial Intelligence** at the **University of Moratuwa**.
+- Studying **BSc (Hons) in Artificial Intelligence** at the **University of Moratuwa**.
 - Building projects across **AI, web apps, embedded systems, robotics, and computer vision**.
 - Based in **Sri Lanka**.
 
