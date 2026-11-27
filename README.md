@@ -21,10 +21,9 @@
 ### Tech stack
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=python,cpp,js,ts,react,flutter,fastapi,postgres,arduino,git,github&perline=11" alt="Python, C++, JavaScript, TypeScript, React, Flutter, FastAPI, PostgreSQL, Arduino, Git, and GitHub" />
+  <img src="https://skillicons.dev/icons?i=python,cpp,js,ts,react,flutter,fastapi,postgres,arduino,git,github,opencv,raspberrypi&perline=13" alt="Python, C++, JavaScript, TypeScript, React, Flutter, FastAPI, PostgreSQL, Arduino, Git, GitHub, OpenCV, and Raspberry Pi" />
+  <img src="assets/langchain.svg" width="48" height="48" alt="LangChain" />
 </p>
-
-**AI and machine learning:** LangChain · LangGraph · AutoGen · OpenAI API · Gemini API · ONNX Runtime · OpenCV
 
 ### Selected projects
 
