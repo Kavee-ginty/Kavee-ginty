@@ -15,7 +15,7 @@ class SnapSvgTests(unittest.TestCase):
                 {"date": "2026-11-30", "weekday": 1, "contributionCount": 8, "contributionLevel": "FOURTH_QUARTILE"},
             ]},
         ]
-        svg = render_svg(weeks, "dark", "AAAA")
+        svg = render_svg(weeks, "dark", "AAAA", "BBBB")
         root = ET.fromstring(svg)
         ns = "{http://www.w3.org/2000/svg}"
         cells = [element for element in root.iter(f"{ns}rect") if element.find(f"{ns}title") is not None]
@@ -26,12 +26,16 @@ class SnapSvgTests(unittest.TestCase):
         children = list(root)
         self.assertLess(next(i for i, element in enumerate(children) if element.get("shape-rendering")),
                         next(i for i, element in enumerate(children) if element.get("class") == "gauntlet"))
+        self.assertLess(next(i for i, element in enumerate(children) if element.get("class") == "gauntlet"),
+                        next(i for i, element in enumerate(children) if element.get("class") == "red-gauntlet"))
         self.assertEqual({element.get("class") for element in root.iter(f"{ns}use")},
-                         {None, "index-finger", "thumb"})
+                         {None, "index-finger", "thumb", "red-index", "red-thumb"})
         self.assertIn("3 contributions", svg)
-        self.assertIn("then 2 filled squares", svg)
+        self.assertIn("2 filled contribution squares", svg)
+        self.assertIn("71.0%", svg)
+        self.assertIn("70.5%", svg)
         self.assertIn("prefers-reduced-motion", svg)
-        self.assertNotEqual(render_svg(weeks, "light", "AAAA"), svg)
+        self.assertNotEqual(render_svg(weeks, "light", "AAAA", "BBBB"), svg)
 
 
 if __name__ == "__main__":
