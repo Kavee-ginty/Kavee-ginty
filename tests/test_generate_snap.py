@@ -28,6 +28,12 @@ class SnapSvgTests(unittest.TestCase):
                         next(i for i, element in enumerate(children) if element.get("class") == "gauntlet"))
         self.assertLess(next(i for i, element in enumerate(children) if element.get("class") == "gauntlet"),
                         next(i for i, element in enumerate(children) if element.get("class") == "red-gauntlet"))
+        gold = root.find(f".//{ns}g[@class='gauntlet']/{ns}svg")
+        red = root.find(f".//{ns}g[@class='red-gauntlet']/{ns}svg")
+        self.assertEqual([gold.get(key) for key in ("x", "y", "width", "height")],
+                         [red.get(key) for key in ("x", "y", "width", "height")])
+        self.assertEqual(gold.get("viewBox"), "456 52 48 53")
+        self.assertEqual(gold.get("preserveAspectRatio"), "none")
         self.assertEqual({element.get("class") for element in root.iter(f"{ns}use")},
                          {None, "index-finger", "thumb", "red-index", "red-thumb"})
         self.assertIn("3 contributions", svg)

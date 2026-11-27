@@ -141,6 +141,8 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str, red_glove_png_
     <clipPath id="index-clip" clipPathUnits="userSpaceOnUse"><path d="M480 66 Q487 63 494 67 L502 71 L501 78 L493 81 L481 77Z"/></clipPath>
     <clipPath id="thumb-clip" clipPathUnits="userSpaceOnUse"><path d="M499 69 Q511 69 513 80 L512 94 L502 106 L492 103 L495 91 L493 78Z"/></clipPath>
     <mask id="base-mask" maskUnits="userSpaceOnUse" x="448" y="52" width="64" height="85"><rect x="448" y="52" width="64" height="85" fill="white"/><path d="M480 66 Q487 63 494 67 L502 71 L501 78 L493 81 L481 77Z" fill="black"/><path d="M499 69 Q511 69 513 80 L512 94 L502 106 L492 103 L495 91 L493 78Z" fill="black"/></mask>
+    <linearGradient id="gold-wrist-fade" x1="0" y1="96" x2="0" y2="105" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient>
+    <mask id="gold-fade-mask" maskUnits="userSpaceOnUse" x="456" y="52" width="48" height="53"><rect x="456" y="52" width="48" height="53" fill="url(#gold-wrist-fade)"/></mask>
     <clipPath id="red-index-clip" clipPathUnits="userSpaceOnUse"><path d="M310 32 L425 20 L473 107 L485 345 L365 367 L345 265Z"/></clipPath>
     <clipPath id="red-thumb-clip" clipPathUnits="userSpaceOnUse"><path d="M145 350 L263 339 L378 445 L400 526 L303 622 L211 523Z"/></clipPath>
     <mask id="red-base-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1536"><rect width="1024" height="1536" fill="white"/><path d="M310 32 L425 20 L473 107 L485 345 L365 367 L345 265Z" fill="black"/><path d="M145 350 L263 339 L378 445 L400 526 L303 622 L211 523Z" fill="black"/></mask>
@@ -234,7 +236,7 @@ def render_svg(weeks: list[dict], theme: str, glove_png_b64: str, red_glove_png_
   <rect x=".5" y=".5" width="959" height="189" rx="16" fill="{background}" stroke="{border}"/>
   <g shape-rendering="geometricPrecision">{''.join(cells)}{''.join(crumbs)}</g>
   <circle class="glow" cx="480" cy="95" r="52" fill="url(#aura)"/>
-  <g class="gauntlet"><g transform="translate(480 94.5) scale(1.2) translate(-480 -94.5)"><use href="#glove-art" mask="url(#base-mask)"/><use class="index-finger" href="#glove-art" clip-path="url(#index-clip)"/><use class="thumb" href="#glove-art" clip-path="url(#thumb-clip)"/></g></g>
+  <g class="gauntlet"><svg x="435" y="40" width="90" height="108" viewBox="456 52 48 53" preserveAspectRatio="none" overflow="hidden"><g mask="url(#gold-fade-mask)"><use href="#glove-art" mask="url(#base-mask)"/><use class="index-finger" href="#glove-art" clip-path="url(#index-clip)"/><use class="thumb" href="#glove-art" clip-path="url(#thumb-clip)"/></g></svg></g>
   <g class="flash"><circle cx="500" cy="75" r="13" fill="url(#burst)"/><path d="M500 50v8 M500 92v8 M475 75h8 M517 75h8 M482 57l7 7 M511 86l7 7 M518 57l-7 7 M489 86l-7 7" stroke="#fde68a" stroke-width="2" stroke-linecap="round"/></g>
   <circle class="red-glow" cx="480" cy="95" r="52" fill="url(#red-aura)"/>
   <g class="red-gauntlet"><svg x="435" y="40" width="90" height="108" viewBox="130 0 760 912" overflow="hidden"><g mask="url(#red-fade-mask)"><use href="#red-art" mask="url(#red-base-mask)"/><use class="red-index" href="#red-art" clip-path="url(#red-index-clip)"/><use class="red-thumb" href="#red-art" clip-path="url(#red-thumb-clip)"/></g></svg></g>

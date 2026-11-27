@@ -50,6 +50,6 @@
 ### Contribution trail
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-fingers-dark.svg?v=gold-red-cycle" />
-  <img src="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-fingers.svg?v=gold-red-cycle" alt="A gold gauntlet snaps Kaveesha's contribution squares away, then a red gauntlet snaps them back" width="100%" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-fingers-dark.svg?v=matched-hands" />
+  <img src="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-fingers.svg?v=matched-hands" alt="A gold gauntlet snaps Kaveesha's contribution squares away, then a red gauntlet snaps them back" width="100%" />
 </picture>
