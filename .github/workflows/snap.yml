@@ -3,7 +3,7 @@ name: Generate contribution snap animation
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 0 * * *'
+    - cron: '15 */6 * * *'
   push:
     branches: [main]
 
@@ -30,3 +30,27 @@ jobs:
           build_dir: dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update-heading:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refresh yearly contribution count
+        env:
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          python3 scripts/update_contribution_count.py
+          if git diff --quiet -- README.md; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update yearly contribution count"
+          git push origin main || {
+            git fetch origin main
+            git rebase origin/main
+            git push origin main
+          }
