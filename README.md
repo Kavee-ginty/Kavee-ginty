@@ -50,6 +50,6 @@
 ## 1,092 contributions in the last year
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-calendar-synced-dark.svg" />
-  <img src="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-calendar-synced.svg" alt="A labeled contribution calendar where a gold gauntlet snaps the squares away and a red gauntlet snaps them back" width="100%" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-calendar-dust-dark.svg" />
+  <img src="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-calendar-dust.svg" alt="A labeled contribution calendar where a gold gauntlet snaps the squares away and a red gauntlet snaps them back" width="100%" />
 </picture>

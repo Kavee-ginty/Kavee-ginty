@@ -14,18 +14,32 @@ class SnapSvgTests(unittest.TestCase):
                 {"date": "2026-12-01", "weekday": 2, "contributionCount": 1, "contributionLevel": "FOURTH_QUARTILE"},
             ]},
         ]
-        root = ET.fromstring(render_svg(weeks, "dark", "AAAA", "BBBB"))
+        svg = render_svg(weeks, "dark", "AAAA", "BBBB")
+        root = ET.fromstring(svg)
         ns = "{http://www.w3.org/2000/svg}"
         self.assertEqual([(text.text, text.get("x")) for text in root.iter(f"{ns}text")
-                          if text.get("class") == "month-label"], [("Dec", "47")])
+                          if "month-label" in text.get("class", "").split()], [("Dec", "47")])
         self.assertEqual([text.text for text in root.iter(f"{ns}text")
                           if text.text in {"Mon", "Wed", "Fri", "Less", "More"}],
                          ["Mon", "Wed", "Fri", "Less", "More"])
         self.assertEqual([rect.get("fill") for rect in root.iter(f"{ns}rect")
-                          if rect.get("class") == "legend-swatch"],
+                          if "legend-swatch" in rect.get("class", "").split()],
                          ["#151b23", "#033a16", "#196c2e", "#2ea043", "#56d364"])
-        self.assertEqual(sum(group.get("class") == "annotations" for group in root.iter(f"{ns}g")), 3)
-        self.assertIn("@keyframes annotations", render_svg(weeks, "dark", "AAAA", "BBBB"))
+        annotations = [element for element in root.iter()
+                       if "annotation" in element.get("class", "").split()]
+        self.assertEqual(len(annotations), 11)
+        self.assertTrue(all(
+            any(cls.startswith("b") and cls[1:].isdigit()
+                for cls in element.get("class", "").split())
+            and "--dx:" in element.get("style", "")
+            for element in annotations
+        ))
+        december = next(text for text in root.iter(f"{ns}text") if text.text == "Dec")
+        december_cell = next(rect for rect in root.iter(f"{ns}rect")
+                             if rect.get("x") == "47" and rect.find(f"{ns}title") is not None)
+        self.assertEqual(december.get("class").split()[-1],
+                         december_cell.get("class").split()[-1])
+        self.assertNotIn("@keyframes annotations", svg)
 
     def test_calendar_positions_and_accessibility(self):
         weeks = [
