@@ -12,6 +12,13 @@
 
 ---
 
+## 1,092 contributions in the last year
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-calendar-dust-dark.svg" />
+  <img src="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-calendar-dust.svg" alt="A labeled contribution calendar where a gold gauntlet snaps the squares away and a red gauntlet snaps them back" width="100%" />
+</picture>
+
 ### About me
 
 - Studying **BSc (Hons) in Artificial Intelligence** at the **University of Moratuwa**.
@@ -46,10 +53,3 @@
   <img height="165" src="https://github-readme-stats.vercel.app/api?username=Kavee-ginty&show_icons=true&theme=tokyonight&hide_border=true" alt="Kaveesha's GitHub stats" />
   <img height="165" src="https://streak-stats.demolab.com?user=Kavee-ginty&theme=tokyonight&hide_border=true" alt="Kaveesha's GitHub contribution streak" />
 </div>
-
-## 1,092 contributions in the last year
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-calendar-dust-dark.svg" />
-  <img src="https://raw.githubusercontent.com/Kavee-ginty/Kavee-ginty/refs/heads/output/github-snap-calendar-dust.svg" alt="A labeled contribution calendar where a gold gauntlet snaps the squares away and a red gauntlet snaps them back" width="100%" />
-</picture>
